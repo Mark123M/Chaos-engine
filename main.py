@@ -15,7 +15,7 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 CANVAS = pygame.Surface((WIDTH-300, HEIGHT))
 
 pygame.display.set_caption("Chaos engine")
-manager = pygame_gui.UIManager((1600, 900))
+manager = pygame_gui.UIManager((WIDTH, HEIGHT), 'theme.json')
 
 clock = pygame.time.Clock()
 
@@ -52,7 +52,7 @@ def main():
     
     dropdown = pygame_gui.elements.UIDropDownMenu(
         options_list=["select a point", "apple", "banana", "orange"], 
-        relative_rect=pygame.Rect((WIDTH-240, 50), (200, 30)), 
+        relative_rect=pygame.Rect((WIDTH-240, 50), (200, 40)), 
         starting_option = "select a point", 
         manager = manager,
         object_id="menu",
@@ -60,7 +60,6 @@ def main():
     )
 
     CANVAS.fill('Black')
-    SCREEN.fill('White')
 
     while True:
         UI_REFRESH_RATE = clock.tick(60)/1000
@@ -78,7 +77,7 @@ def main():
             manager.process_events(event)
 
         #clear screen
-        SCREEN.fill((54,57,63))
+        SCREEN.fill('White')
         clock.tick(60)
         manager.draw_ui(SCREEN)
 
