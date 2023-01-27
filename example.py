@@ -4,13 +4,13 @@ import math
 import colorsys
 from pygame.locals import *
 
-
 idx = [0, 0, 0]
 
 def mark_pixel(surface, pos, pcol):
     col = surface.get_at(pos)
-    surface.set_at(pos, pcol)
-  
+    surface.set_at(pos, (min(col[0] + pcol[0]/10, 255),
+                         min(col[1] + pcol[1]/10, 255),
+                         min(col[2] + pcol[2]/10, 255)))
 
 def random_point_index(p):
     global idx
@@ -41,11 +41,10 @@ def init_polygon(width, height, n):
                   (int(color[0]*255), int(color[1]*255), int(color[2]*255))))
     return p
 
-
 def main(width, height, n, r):
     pygame.init()
     surface = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('Chaos Game')
+    pygame.display.set_caption('Das Chaos Spiel')
 
     p = init_polygon(width, height, n)
 
@@ -68,4 +67,4 @@ def main(width, height, n, r):
     pygame.quit()
 
 if __name__ == "__main__":
-    main(900, 900, 4, 4/(4+3.5))
+    main(1000, 1000, 4, 4/7)

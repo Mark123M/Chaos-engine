@@ -18,12 +18,20 @@ MANAGER = pygame_gui.UIManager((WIDTH, HEIGHT), 'theme.json')
 clock = pygame.time.Clock()
 
 GAME_STATE = {
-    "points": ["select a point","a", "banana", "orange"] 
+    "point_options": ["select a point"],
+    "points":
+    [
+        [
+            (0, 0),
+            
+        ]
+    ]
+
 }
 
 points_dropdown = pygame_gui.elements.UIDropDownMenu(
-    options_list= GAME_STATE["points"], 
-    relative_rect=pygame.Rect((WIDTH-240, 50), (200, 40)), 
+    options_list= GAME_STATE["point_options"], 
+    relative_rect=pygame.Rect((WIDTH-260, 50), (220, 40)), 
     starting_option = "select a point", 
     manager = MANAGER,
     object_id="menu",
@@ -46,6 +54,7 @@ def show_user_name(user_name):
 
 def update_selection(option, dropdown):
    # SCREEN.fill("white")
+
     pygame.display.update()
     new_text = pygame.font.SysFont("bahnschrift", 100).render(f"Hello, {option}", True, "black")
     new_text_rect = new_text.get_rect(center=(WIDTH/2, HEIGHT/2))
@@ -54,7 +63,9 @@ def update_selection(option, dropdown):
 def add_point(pos):
     print(pos)
     pygame.draw.circle(CANVAS, 'White', pos, 5)
-    GAME_STATE["points"].append(str(pos))
+    GAME_STATE["point_options"].append(str(pos))
+    GAME_STATE["points"].append(pos)
+
 
 
 def main():
