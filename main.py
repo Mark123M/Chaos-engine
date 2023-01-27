@@ -22,8 +22,7 @@ GAME_STATE = {
     "points":
     [
         [
-            (0, 0),
-            
+            "point"
         ]
     ]
 
