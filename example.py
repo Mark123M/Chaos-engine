@@ -67,4 +67,4 @@ def main(width, height, n, r):
     pygame.quit()
 
 if __name__ == "__main__":
-    main(1000, 1000, 4, 4/7)
+    main(1000, 1000, 6, 6/11)

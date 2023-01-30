@@ -5,6 +5,7 @@ import sys
 import math
 import colorsys
 import tkinter as tk
+import points_processor
 
 root = tk.Tk()
 pygame.init()
@@ -18,18 +19,18 @@ MANAGER = pygame_gui.UIManager((WIDTH, HEIGHT), 'theme.json')
 clock = pygame.time.Clock()
 
 GAME_STATE = {
-    "point_options": ["select a point"],
-    "points":
-    [
-        [
-            "point"
-        ]
-    ]
-
+    "point_ids": ["select a point"],
+    "point_coords": [(-100, -100)],
+    "point_odds": [],
+    "rotations": [],
+    "chaos_lengths": [],
+    "color_scheme": [],
+    "count" : [],
+    "processor": "default",
 }
 
 points_dropdown = pygame_gui.elements.UIDropDownMenu(
-    options_list= GAME_STATE["point_options"], 
+    options_list= GAME_STATE["point_ids"], 
     relative_rect=pygame.Rect((WIDTH-260, 50), (220, 40)), 
     starting_option = "select a point", 
     manager = MANAGER,
@@ -62,8 +63,10 @@ def update_selection(option, dropdown):
 def add_point(pos):
     print(pos)
     pygame.draw.circle(CANVAS, 'White', pos, 5)
-    GAME_STATE["point_options"].append(str(pos))
-    GAME_STATE["points"].append(pos)
+    GAME_STATE["point_ids"].append(str(pos))
+    GAME_STATE["point_coords"].append(pos)
+    print(dir(points_processor))
+    getattr(points_processor, GAME_STATE["processor"])(GAME_STATE)
 
 
 
@@ -80,7 +83,8 @@ def main():
     while True:
         UI_REFRESH_RATE = clock.tick(60)/1000
 
-        for event in pygame.event.get(): #handle events
+        #handle events
+        for event in pygame.event.get(): 
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -94,6 +98,9 @@ def main():
                 add_point(pygame.mouse.get_pos())
             
             MANAGER.process_events(event)
+        
+        #process points
+        #points_processor.default(GAME_STATE)
 
         #clear screen
         SCREEN.fill('White')
